@@ -1,0 +1,8 @@
+# Sportshack-Practice
+This is a repo for our Data Science team to practice on in preparation for SportsHack 2015. You may ask what is a sportSHACK? It is not a building... 
+
+Two days. Three cities. More than 400 participants from across Canada.
+
+SportsHack will bring together teams of hackers in Toronto, Vancouver and Halifax to compete in developing innovative sports-related software solutions.
+
+This year, in partnership with the Canadian Football League (CFL), SportsHack challenges you to develop real world technologies from the CFL's real world data.
