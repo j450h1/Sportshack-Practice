@@ -9,6 +9,11 @@ This year, in partnership with the Canadian Football League (CFL), SportsHack ch
 
 # Project Requirements
 Maximum 5 figures and 500 words
--Report in HTML or PDF format
+Report in HTML or PDF format
+If selected to present, must provide full documentation on how you got the results
 
+# Deadline
+Wed, November 25th @ 6 PM
+
+# Data Attributes
 http://data.vancouver.ca/datacatalogue/businessLicenceAttributes.htm#issued
