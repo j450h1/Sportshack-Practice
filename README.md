@@ -7,4 +7,8 @@ SportsHack will bring together teams of hackers in Toronto, Vancouver and Halifa
 
 This year, in partnership with the Canadian Football League (CFL), SportsHack challenges you to develop real world technologies from the CFL's real world data.
 
+# Project Requirements
+Maximum 5 figures and 500 words
+-Report in HTML or PDF format
+
 http://data.vancouver.ca/datacatalogue/businessLicenceAttributes.htm#issued
