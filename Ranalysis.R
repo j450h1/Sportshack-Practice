@@ -41,7 +41,7 @@ colnames(df)
 
 #fastest growing cities in terms of total employees
   
-#what type of businesses stay in business the longest
+
   
 sort(table(df$City), desc = FALSE)
 
@@ -64,16 +64,10 @@ figure1 <- OOB %>%
   summarize(count = n()) %>%
   arrange(desc(count))
 #Office
-
 #Bar chart
-
 #devtools::install_github("timelyportfolio/rcdimple")
 library(rcdimple)
 demo(dimple)
-
-my_data <- data.frame(
-  variable = c("A", "B", "C", "D"),
-  value = c(0.2, 0.2, 0.2, 0.4))
 
 figure1 %>%
   filter(count > 2300) %>%
@@ -91,10 +85,56 @@ figure1 %>%
 
 head(Employees)  
 
-#Change over time
-
 # what days do most business licenses get issued
 
+df$DayOfWeek <- weekdays(df$IssuedDateD)
 
+figure2 <- df %>%
+  filter(!is.na(DayOfWeek)) %>%
+  group_by(DayOfWeek) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count))
 
+figure2 %>%
+  dimple( x = "DayOfWeek", y = "count", type = "bar"  ) %>%
+  xAxis( ) %>%
+  default_colors( ) %>%
+  add_title( html =
+               "<div style='text-align:center;width:100%'>
+             <b style = 'font-size:130%;'>
+             Count of Business Licenses Issued <br> By DayOfWeek
+             </b>
+             </div>"
+  )
 
+table(df$Status)
+
+OOB <- df %>%
+  filter(Status == 'Gone Out of Business') %>%
+  group_by(BusinessName, BusinessType, Status) %>%
+  summarize(StartDate = min(IssuedDateD, na.rm=TRUE ), EndDate = max(ExpiredDateD, na.rm=TRUE )) %>%
+  mutate(DaysInBusiness = EndDate - StartDate) %>%
+
+#The OOB names  
+    
+#What percent of BusinessNames have equivalent Business Tradenames?
+length(df[with(df, BusinessName==BusinessTradeName),])/nrow(df)
+#very low number
+
+#What are the top active business types for each neighbourhood?
+NH <- df %>%
+  filter(!(BusinessName %in% OOB$BusinessName))
+table(NH$Status)
+length(unique(NH$BusinessName))
+table(df$Status)
+length(unique(df$BusinessName))
+#Find the ones that are not out of business.
+# Still need to sort out ones that are active only
+table(df$Status)
+
+NHOOD <- NH %>%
+  group_by(LocalArea) %>%
+  summarize(count=n()) %>%
+  arrange(desc(count))
+
+#Change over time
