@@ -26,9 +26,9 @@ bt <- cp[with(cp,grepl("^880", Unit)),]
 
 #Convert dates to date type
 colnames(df)
-df$IssuedDateD <- strptime(df$IssuedDate, format = "y%-%m-%d")
-df$ExpiredDateD <- strptime(df$ExpiredDate, format = "y%-%m-%d")
-df$ExtractDateD <- strptime(df$ExtractDate, format = "y%-%m-%d")
+df$IssuedDateD <- as.Date(df$IssuedDate,format="%Y-%m-%d %H:%M:%S")
+df$ExpiredDateD <- as.Date(df$ExpiredDate,format="%Y-%m-%d %H:%M:%S")
+df$ExtractDateD <- as.Date(df$ExtractDate,format="%Y-%m-%d ")
 
 # Check which columns have any NAs
 unlist(lapply(df, function(x) any(is.na(x))))
@@ -39,20 +39,60 @@ colSums(is.na(df))
 
 colnames(df)
 
-library(dplyr)
-flights %>%
-  group_by(year, month, day) %>%
-  select(arr_delay, dep_delay) %>%
-
 #fastest growing cities in terms of total employees
   
 #what type of businesses stay in business the longest
+  
+sort(table(df$City), desc = FALSE)
 
-  
-  
-  
+nrow(df)
+795739/nrow(df)
+library(dplyr)
+
 #what type of businesses go out of business the most
-  
+table(df$Status)
+
+OOB <- df %>%
+  filter(Status == 'Gone Out of Business') %>%
+  group_by(BusinessName, BusinessType, Status) %>%
+  summarize(StartDate = min(IssuedDateD, na.rm=TRUE ), EndDate = max(ExpiredDateD, na.rm=TRUE )) %>%
+  mutate(DaysInBusiness = EndDate - StartDate) %>%
+  arrange(desc(DaysInBusiness))
+
+figure1 <- OOB %>%
+  group_by(BusinessType) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count))
+#Office
+
+#Bar chart
+
+#devtools::install_github("timelyportfolio/rcdimple")
+library(rcdimple)
+demo(dimple)
+
+my_data <- data.frame(
+  variable = c("A", "B", "C", "D"),
+  value = c(0.2, 0.2, 0.2, 0.4))
+
+figure1 %>%
+  filter(count > 2300) %>%
+  dimple( x = "BusinessType", y = "count", type = "bar"  ) %>%
+  xAxis( ) %>%
+  default_colors( ) %>%
+    add_title( html =
+                 "<div style='text-align:center;width:100%'>
+               <b style = 'font-size:130%;'>
+               Out of Business Count <br> By BusinessType
+               </b>
+               </div>"
+    )
+
+
+head(Employees)  
+
+#Change over time
+
 # what days do most business licenses get issued
 
 
